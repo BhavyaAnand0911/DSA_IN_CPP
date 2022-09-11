@@ -22,7 +22,7 @@ int isFull(struct Stack p){
 }
 void push(struct Stack p, int val){
     if(isFull(p)){
-        cout<<"Stack Overflow"<<endl;
+        cout<<"Stack Overflow"<<endl0;
     }
     else{
         ++p.top;
