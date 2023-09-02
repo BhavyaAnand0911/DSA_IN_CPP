@@ -103,7 +103,7 @@ void dequeue::delete_fr_front() {
          case 3:
             d.show();
          break;
-         case 4:
+         case 4
             d.delete_fr_front();
          break;
          case 5:

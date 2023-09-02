@@ -12,7 +12,8 @@ void insertCQ(int val) {
    if (front == -1) {
       front = 0;
       rear = 0;
-   } else {
+   } 
+   else {
       if (rear == n - 1)
       rear = 0;
       else
@@ -49,7 +50,8 @@ void displayCQ() {
          cout<<cqueue[f]<<" ";
          f++;
       }
-   } else {
+   } 
+   else {
       while (f <= n - 1) {
          cout<<cqueue[f]<<" ";
          f++;

@@ -5,78 +5,90 @@ struct Node {
   struct Node* next;
   struct Node* prev;
 };
-void insertFront(struct Node** head, int data) {
-  struct Node* newNode = new Node;
-  newNode->data = data;
-  newNode->next = (*head);
-  newNode->prev = NULL;
-  if ((*head) != NULL)
-    (*head)->prev = newNode;
-  (*head) = newNode;
-}
-void insertAfter(struct Node* prev_node, int data) {
-  if (prev_node == NULL) {
-    cout << "previous node cannot be null";
-    return;
+Node* insertAtHead(Node * Head,Node** tail,int data){
+  if(Head==NULL){
+   Node * newNode=new Node;
+   newNode->data=data;
+   newNode->next=NULL;
+   newNode->prev=NULL;
+   *tail=newNode;
+   return newNode;
   }
-  struct Node* newNode = new Node;
-  newNode->data = data;
-  newNode->next = prev_node->next;
-  prev_node->next = newNode;
-  newNode->prev = prev_node;
-  if (newNode->next != NULL)
-    newNode->next->prev = newNode;
-}
-void insertEnd(struct Node** head, int data) {
-  struct Node* newNode = new Node;
-  newNode->data = data;
-  newNode->next = NULL;
-  struct Node* temp = *head;
-  if (*head == NULL) {
-    newNode->prev = NULL;
-    *head = newNode;
-    return;
+  else{
+  Node * newNode=new Node;
+  newNode->data=data;
+  newNode->next=Head;
+  Head->prev=newNode;
+  Head=newNode;
+  return Head;
   }
-  while (temp->next != NULL)
-    temp = temp->next;
-  temp->next = newNode;
-  newNode->prev = temp;
 }
-void deleteNode(struct Node** head, struct Node* del_node) {
-  if (*head == NULL || del_node == NULL)
-    return;
-  if (*head == del_node)
-    *head = del_node->next;
-  if (del_node->next != NULL)
-    del_node->next->prev = del_node->prev;
-  if (del_node->prev != NULL)
-    del_node->prev->next = del_node->next;
-  free(del_node);
+Node *insertAtEnd(Node *tail,int data){
+  if(tail==NULL){
+   Node * newNode=new Node;
+   newNode->data=data;
+   newNode->next=NULL;
+   newNode->prev=NULL;
+   return newNode;
+  }
+  else{
+  Node * newNode=new Node;
+  newNode->data=data;
+  tail->next=newNode;
+  newNode->prev=tail;
+  newNode->next=NULL;
+  tail=newNode;
+  return tail;
+  }
 }
-void displayList(struct Node* node) {
-  struct Node* last;
+Node* insertAtPosition(Node *head,Node *tail,int pos,int val){
+  if(pos==1){
+    insertAtHead(head,&tail,val);
+    return head;
+  }
+  int cnt=1;
+  Node* temp=new Node;
+  while(cnt<pos-1){
+    cnt++;
+    temp=temp->next;
+  }
+  if(temp->next==NULL){
+    insertAtEnd(tail,val);
+    return head;
+  }
+  Node* nodeToInsert=new Node;
+  nodeToInsert->data=val;  
+  nodeToInsert->next=temp->next;
+  temp->next->prev=nodeToInsert;
+  temp->next=nodeToInsert;
+  nodeToInsert->prev=temp;
+  return head;
 
-  while (node != NULL) {
-    cout << node->data << "->";
-    last = node;
-    node = node->next;
-  }
-  if (node == NULL)
-    cout << "NULL\n";
 }
-
+void ListTraversal(Node * ptr){
+    while(ptr!=NULL){
+        cout<<ptr->data<<endl;
+        ptr=ptr->next;
+    }
+}
 int main() {
   struct Node* head = NULL;
-
-  insertEnd(&head, 5);
-  insertFront(&head, 1);
-  insertFront(&head, 6);
-  insertEnd(&head, 9);
-  insertAfter(head, 11);
-  insertAfter(head->next, 15);
-
-  displayList(head);
-  deleteNode(&head, head->next->next->next->next->next);
-
-  displayList(head);
+  struct Node* tail= NULL;
+  cout<<"After insertion at beginning."<<endl;
+  head=insertAtHead(head,&tail,20);
+  head=insertAtHead(head,&tail,21);
+  head=insertAtHead(head,&tail,22);
+  head=insertAtHead(head,&tail,23);
+  ListTraversal(head);
+  cout<<"After insertion at end"<<endl;
+  tail=insertAtEnd(tail,1);
+  tail=insertAtEnd(tail,2);
+  tail=insertAtEnd(tail,3);
+  tail=insertAtEnd(tail,4);
+  tail=insertAtEnd(tail,5);
+  tail=insertAtEnd(tail,6);
+  ListTraversal(head);
+  cout<<"After insertion at position"<<endl;
+  head=insertAtPosition(head,tail,1,45);
+  ListTraversal(head);
 }

@@ -5,7 +5,7 @@ bool isOperator(char c)
 {
     return (!isalpha(c) && !isdigit(c));
 }
- 
+
 int getPriority(char C)
 {
     if (C == '-' || C == '+')
@@ -21,7 +21,7 @@ string infixToPostfix(string infix)
 {
     infix = '(' + infix + ')';
     int l = infix.size();
-    stack<char> char_stack;
+    stack <char> char_stack;
     string output;
  
     for (int i = 0; i < l; i++) {
